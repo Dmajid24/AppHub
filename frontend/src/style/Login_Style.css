@@ -1,0 +1,200 @@
+/* Assumes --navy, --red, --red-deep, --red-soft, --card, --surface,
+   --ink, --ink-soft, --line, --shadow-1 are defined globally
+   (e.g. in a shared variables.css / App.css), matching the dashboard.
+   Fallbacks included below in case this file loads standalone. */
+:root {
+    --navy: #1F2A44;
+    --red: #D3324A;
+    --red-deep: #A50224;
+    --red-soft: rgba(211, 50, 74, 0.12);
+    --card: #ffffff;
+    --surface: #E7E7E7;
+    --ink: #2d3748;
+    --ink-soft: #718096;
+    --line: #e2e8f0;
+    --shadow-1: 0 8px 24px rgba(31, 42, 68, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--surface);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Login Card - matches .panel styling from dashboard */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 30px;
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow-1);
+}
+
+/* Eyebrow badge, same pattern as .dashboard-hero-eyebrow */
+.login-badge {
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--red);
+    background: var(--red-soft);
+    padding: 5px 10px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+}
+
+/* Heading */
+.login-card h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+
+/* Subtitle */
+.login-subtitle {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 22px;
+}
+
+/* Form */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: var(--card);
+    color: var(--ink);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #b8c0cf;
+}
+
+.form-group input:hover {
+    border-color: #cbd5e0;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px var(--red-soft);
+}
+
+/* Error message, styled like .alarm-item / sev-critical */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 11px 14px;
+    background: var(--red-soft);
+    color: var(--red-deep);
+    border-left: 3px solid var(--red);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.error-message::before {
+    content: '⚠';
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+/* Submit button, same navy gradient as .kpi-hero */
+.login-btn {
+    width: 100%;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, var(--navy) 0%, #2a3a63 100%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    margin-top: 6px;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(31, 42, 68, 0.18);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.login-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Help card, matches .ticket-card surface style */
+.login-help-card {
+    margin-top: 22px;
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 14px 16px;
+}
+
+.login-help-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+}
+
+.login-help-text {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .login-card {
+        margin: 20px;
+        padding: 26px 22px;
+    }
+}

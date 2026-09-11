@@ -1,0 +1,306 @@
+[
+  {
+    "id": "jakarta",
+    "name": "Jakarta",
+    "coordinates": [-6.2088, 106.8456],
+    "dataCenters": [
+      {
+        "id": "slipi-dc",
+        "name": "Slipi DC",
+        "address": "Palmerah, Jakarta Barat",
+        "coordinates": [-6.1904, 106.7972],
+        "servers": [
+          {
+            "id": "SRV-PAY-01",
+            "hostname": "pay-prod-primary",
+            "ipAddress": "10.20.1.15",
+            "coordinates": [-6.1888, 106.7948],
+            "status": "critical",
+            "environment": "Production",
+            "operatingSystem": "Ubuntu Server 24.04",
+            "rack": "R02-U18",
+            "cpu": 96,
+            "memory": 84,
+            "disk": 71,
+            "uptime": 99.72,
+            "responseTime": 8420,
+            "lastCheck": "2 menit lalu",
+            "applications": [
+              {
+                "name": "Payment Gateway",
+                "role": "Primary",
+                "criticality": "critical"
+              },
+              {
+                "name": "Billing Service",
+                "role": "Shared",
+                "criticality": "high"
+              },
+              {
+                "name": "Transaction Monitor",
+                "role": "Shared",
+                "criticality": "medium"
+              }
+            ],
+            "alerts": [
+              "Response time lebih dari 8 detik",
+              "CPU usage di atas 95%"
+            ]
+          },
+          {
+            "id": "SRV-PAY-02",
+            "hostname": "pay-prod-secondary",
+            "ipAddress": "10.20.1.16",
+            "coordinates": [-6.1907, 106.7992],
+            "status": "healthy",
+            "environment": "Production",
+            "operatingSystem": "Ubuntu Server 24.04",
+            "rack": "R02-U19",
+            "cpu": 42,
+            "memory": 58,
+            "disk": 49,
+            "uptime": 99.99,
+            "responseTime": 128,
+            "lastCheck": "1 menit lalu",
+            "applications": [
+              {
+                "name": "Payment Gateway",
+                "role": "Secondary",
+                "criticality": "critical"
+              },
+              {
+                "name": "Billing Service",
+                "role": "Shared",
+                "criticality": "high"
+              }
+            ],
+            "alerts": []
+          },
+          {
+            "id": "SRV-CRM-01",
+            "hostname": "crm-app-01",
+            "ipAddress": "10.20.2.21",
+            "coordinates": [-6.1931, 106.7959],
+            "status": "warning",
+            "environment": "Production",
+            "operatingSystem": "Windows Server 2025",
+            "rack": "R04-U08",
+            "cpu": 77,
+            "memory": 86,
+            "disk": 68,
+            "uptime": 99.91,
+            "responseTime": 680,
+            "lastCheck": "3 menit lalu",
+            "applications": [
+              {
+                "name": "CRM Suite",
+                "role": "Primary",
+                "criticality": "high"
+              },
+              {
+                "name": "Customer 360",
+                "role": "Shared",
+                "criticality": "high"
+              },
+              {
+                "name": "Sales Analytics",
+                "role": "Shared",
+                "criticality": "medium"
+              }
+            ],
+            "alerts": [
+              "Memory usage di atas 85%"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cilandak-dc",
+        "name": "Cilandak DC",
+        "address": "Cilandak, Jakarta Selatan",
+        "coordinates": [-6.2892, 106.8006],
+        "servers": [
+          {
+            "id": "SRV-AUTH-01",
+            "hostname": "auth-prod-01",
+            "ipAddress": "10.21.1.10",
+            "coordinates": [-6.2869, 106.7978],
+            "status": "healthy",
+            "environment": "Production",
+            "operatingSystem": "Ubuntu Server 24.04",
+            "rack": "R01-U10",
+            "cpu": 36,
+            "memory": 49,
+            "disk": 44,
+            "uptime": 99.99,
+            "responseTime": 92,
+            "lastCheck": "1 menit lalu",
+            "applications": [
+              {
+                "name": "Identity Service",
+                "role": "Primary",
+                "criticality": "critical"
+              },
+              {
+                "name": "SSO Portal",
+                "role": "Shared",
+                "criticality": "critical"
+              }
+            ],
+            "alerts": []
+          },
+          {
+            "id": "SRV-DATA-02",
+            "hostname": "data-platform-backup",
+            "ipAddress": "10.21.3.12",
+            "coordinates": [-6.2916, 106.8032],
+            "status": "offline",
+            "environment": "Disaster Recovery",
+            "operatingSystem": "Red Hat Enterprise Linux 9",
+            "rack": "R06-U13",
+            "cpu": 0,
+            "memory": 0,
+            "disk": 64,
+            "uptime": 98.4,
+            "responseTime": 0,
+            "lastCheck": "18 menit lalu",
+            "applications": [
+              {
+                "name": "Data Platform",
+                "role": "Backup",
+                "criticality": "high"
+              },
+              {
+                "name": "Reporting Hub",
+                "role": "Backup",
+                "criticality": "medium"
+              }
+            ],
+            "alerts": [
+              "Monitoring agent tidak merespons"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "surabaya",
+    "name": "Surabaya",
+    "coordinates": [-7.2575, 112.7521],
+    "dataCenters": [
+      {
+        "id": "surabaya-dc",
+        "name": "Surabaya DC",
+        "address": "Genteng, Surabaya",
+        "coordinates": [-7.2654, 112.7458],
+        "servers": [
+          {
+            "id": "SRV-INV-01",
+            "hostname": "inventory-east-01",
+            "ipAddress": "10.30.1.10",
+            "coordinates": [-7.2638, 112.7437],
+            "status": "warning",
+            "environment": "Production",
+            "operatingSystem": "Ubuntu Server 24.04",
+            "rack": "R02-U07",
+            "cpu": 83,
+            "memory": 76,
+            "disk": 61,
+            "uptime": 99.82,
+            "responseTime": 390,
+            "lastCheck": "2 menit lalu",
+            "applications": [
+              {
+                "name": "Inventory Service",
+                "role": "Primary",
+                "criticality": "high"
+              },
+              {
+                "name": "Warehouse Portal",
+                "role": "Shared",
+                "criticality": "medium"
+              }
+            ],
+            "alerts": [
+              "CPU usage di atas 80%"
+            ]
+          },
+          {
+            "id": "SRV-INV-02",
+            "hostname": "inventory-east-02",
+            "ipAddress": "10.30.1.11",
+            "coordinates": [-7.2673, 112.7481],
+            "status": "healthy",
+            "environment": "Production",
+            "operatingSystem": "Ubuntu Server 24.04",
+            "rack": "R02-U08",
+            "cpu": 46,
+            "memory": 59,
+            "disk": 53,
+            "uptime": 99.98,
+            "responseTime": 138,
+            "lastCheck": "1 menit lalu",
+            "applications": [
+              {
+                "name": "Inventory Service",
+                "role": "Secondary",
+                "criticality": "high"
+              },
+              {
+                "name": "Warehouse Portal",
+                "role": "Shared",
+                "criticality": "medium"
+              }
+            ],
+            "alerts": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "medan",
+    "name": "Medan",
+    "coordinates": [3.5952, 98.6722],
+    "dataCenters": [
+      {
+        "id": "medan-dc",
+        "name": "Medan DC",
+        "address": "Medan Kota, Medan",
+        "coordinates": [3.5897, 98.6738],
+        "servers": [
+          {
+            "id": "SRV-EDGE-MDN-01",
+            "hostname": "edge-medan-01",
+            "ipAddress": "10.40.1.10",
+            "coordinates": [3.5879, 98.6715],
+            "status": "healthy",
+            "environment": "Production",
+            "operatingSystem": "Ubuntu Server 24.04",
+            "rack": "R01-U04",
+            "cpu": 34,
+            "memory": 47,
+            "disk": 39,
+            "uptime": 99.99,
+            "responseTime": 84,
+            "lastCheck": "1 menit lalu",
+            "applications": [
+              {
+                "name": "Regional API Gateway",
+                "role": "Primary",
+                "criticality": "high"
+              },
+              {
+                "name": "Content Delivery",
+                "role": "Shared",
+                "criticality": "medium"
+              }
+            ],
+            "alerts": []
+          }
+        ]
+      }
+    ]
+  }
+]

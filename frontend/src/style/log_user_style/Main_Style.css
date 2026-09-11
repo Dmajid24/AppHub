@@ -1,0 +1,312 @@
+﻿/* ================================================================== */
+/* LOG USER — Main_Style.css                                          */
+/* ================================================================== */
+
+.lu-page {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+}
+
+.lu-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(135deg, var(--navy) 0%, #24365c 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 22px 26px;
+    box-shadow: var(--shadow-1);
+    flex-wrap: wrap;
+}
+
+.lu-hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8fa0c6;
+    margin-bottom: 6px;
+}
+
+.lu-hero h2 {
+    margin: 0 0 6px 0;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.lu-hero p {
+    margin: 0;
+    font-size: 13px;
+    color: #d7def0;
+    max-width: 580px;
+    line-height: 1.5;
+}
+
+.lu-period-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lu-period-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-right: 4px;
+}
+
+.lu-period-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: var(--shadow-1);
+}
+
+.lu-period-btn:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+}
+
+.lu-period-btn.active {
+    background: linear-gradient(135deg, var(--navy) 0%, #2a3a63 100%);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(31, 42, 68, 0.28);
+}
+
+.lu-panel {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow-1);
+}
+
+.lu-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.lu-panel-title {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--ink);
+}
+
+.lu-panel-note {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+}
+
+.lu-chart-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.lu-chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 320px;
+    height: 200px;
+}
+
+.lu-chart-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+}
+
+.lu-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.lu-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.lu-table thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0 14px 12px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+.lu-table thead th.num {
+    text-align: right;
+}
+
+.lu-table tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background 0.12s ease;
+}
+
+.lu-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.lu-table tbody tr:hover {
+    background: var(--surface);
+}
+
+.lu-table tbody td {
+    padding: 12px 14px;
+    color: var(--ink);
+    vertical-align: middle;
+}
+
+.lu-table tbody td.num {
+    text-align: right;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+}
+
+.lu-app-name {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.lu-app-cat {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+}
+
+.lu-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.lu-status-badge.active {
+    background: rgba(30, 158, 107, 0.12);
+    color: var(--green);
+}
+
+.lu-status-badge.inactive {
+    background: rgba(200, 200, 200, 0.18);
+    color: var(--ink-soft);
+}
+
+.lu-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.lu-cost {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.lu-mini-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lu-mini-bar-bg {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--line);
+    overflow: hidden;
+    min-width: 60px;
+}
+
+.lu-mini-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--navy) 0%, #2a5298 100%);
+    transition: width 0.4s ease;
+}
+
+.lu-mini-bar-pct {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    min-width: 36px;
+    text-align: right;
+}
+
+.lu-insight {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    background: rgba(31, 42, 68, 0.06);
+    border: 1px solid rgba(31, 42, 68, 0.14);
+    border-radius: 16px;
+}
+
+.lu-insight-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--navy) 0%, #2a3a63 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lu-insight-body {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+.lu-insight-body strong {
+    color: var(--navy);
+}
+
+.lu-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+@media (max-width: 860px) {
+    .lu-split { grid-template-columns: 1fr; }
+    .lu-hero { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+    .lu-period-btn { padding: 7px 12px; font-size: 12px; }
+    .lu-table thead th, .lu-table tbody td { padding: 10px 10px; }
+}

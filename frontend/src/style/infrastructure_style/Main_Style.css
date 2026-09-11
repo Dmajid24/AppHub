@@ -1,0 +1,447 @@
+.infra-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 8px 0 24px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.infra-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 26px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--navy) 0%, #24365c 100%);
+    color: #fff;
+    box-shadow: var(--shadow-1);
+}
+
+.infra-eyebrow {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8fa0c6;
+}
+
+.infra-hero h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.infra-hero p {
+    margin: 0;
+    color: #d7def0;
+    max-width: 680px;
+    line-height: 1.6;
+}
+
+.infra-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 6px 16px rgba(31, 42, 68, 0.16);
+}
+
+.infra-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+.infra-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.infra-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-1);
+}
+
+.infra-summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--red-soft) 0%, #fff 100%);
+    color: var(--red);
+}
+
+.infra-summary-title {
+    margin: 0 0 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+}
+
+.infra-summary-card h3 {
+    margin: 0 0 2px;
+    font-size: 1.05rem;
+    color: var(--ink);
+}
+
+.infra-summary-card span {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+}
+
+.infra-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 14px;
+}
+
+.infra-card {
+    padding: 16px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-1);
+}
+
+.infra-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.infra-card-label {
+    margin: 0 0 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.infra-card h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--ink);
+}
+
+.infra-chip {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--green-soft);
+    color: var(--green);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.infra-service-list,
+.infra-alert-list,
+.infra-incident-list,
+.infra-schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.infra-service-item,
+.infra-alert-item,
+.infra-incident-item,
+.infra-schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--surface);
+}
+
+.infra-service-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.infra-service-icon,
+.infra-alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--red-soft);
+    color: var(--red);
+}
+
+.infra-service-item h3,
+.infra-alert-item h3,
+.infra-incident-item h3,
+.infra-schedule-item h3 {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink);
+}
+
+.infra-service-item p,
+.infra-alert-item p,
+.infra-schedule-item p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+}
+
+.infra-status-badge,
+.infra-pill {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.infra-overview-panel {
+    display: grid;
+    gap: 14px;
+}
+
+.infra-status-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+}
+
+.infra-status-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+.infra-status-label {
+    margin: 0 0 5px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.infra-region-panel {
+    display: grid;
+    gap: 12px;
+}
+
+.infra-region-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.infra-region-list-header {
+    margin-bottom: 8px;
+}
+
+.infra-region-item {
+    display: grid;
+    gap: 6px;
+}
+
+.infra-region-item p,
+.infra-region-item span {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--ink);
+}
+
+.infra-region-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--line);
+    overflow: hidden;
+}
+
+.infra-region-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #22c55e 0%, #4ade80 100%);
+}
+
+.infra-map-card {
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.infra-map-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.infra-map-title span {
+    font-size: 0.92rem;
+}
+
+.infra-table-wrapper {
+    overflow-x: auto;
+}
+
+.infra-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 620px;
+}
+
+.infra-table th,
+.infra-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--ink);
+}
+
+.infra-table th {
+    color: var(--ink-soft);
+    font-weight: 700;
+}
+
+.infra-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.infra-trend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.infra-mini-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+.infra-mini-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: var(--green-soft);
+    color: var(--green);
+}
+
+.infra-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.infra-incident-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+.infra-map-summary {
+    display: flex;
+    flex-direction: column;
+}
+
+.infra-map-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 16px;
+    background: var(--surface);
+}
+
+.infra-map-nodes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.infra-map-node {
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    text-align: center;
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.infra-map-node.critical {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+}
+
+.infra-schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+    .infra-grid,
+    .infra-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .infra-map-nodes {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .infra-service-item,
+    .infra-alert-item,
+    .infra-incident-item,
+    .infra-schedule-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
