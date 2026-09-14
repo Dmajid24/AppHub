@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-
+import ServerApplicationImpact from '../components/ServerApplicationImpact';
 import Layout from '../components/Layout';
 import { fetchServerDetail } from '../services/infrastructure';
 import '../style/ServerDetail.css';
@@ -217,6 +217,10 @@ export default function ServerDetail() {
                 {status.label}
               </span>
             </header>
+            <ServerApplicationImpact
+              key={server.serverId}
+              serverId={server.serverId}
+            />
 
             <section className="sd-card" aria-labelledby="sd-health-title">
               <div className="sd-section-heading">

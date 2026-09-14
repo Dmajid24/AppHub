@@ -68,3 +68,22 @@ export async function fetchServerDetail(serverId) {
 
   return data;
 }
+
+export async function fetchServerApplicationImpact(serverId) {
+  if (!serverId) {
+    throw new Error('ID server belum tersedia.');
+  }
+
+  const data = await authFetch(
+    `/api/Servers/${encodeURIComponent(serverId)}/application-impact`
+  );
+
+  if (
+    !data?.sourceServer?.serverId ||
+    !Array.isArray(data.applications)
+  ) {
+    throw new Error('Format respons analisis dampak tidak valid.');
+  }
+
+  return data;
+}

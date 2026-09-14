@@ -1,0 +1,337 @@
+.sai-panel {
+  min-width: 0;
+  background: linear-gradient(145deg, #fff 65%, #f8faff);
+}
+
+.sai-heading,
+.sai-source,
+.sai-app-summary,
+.sai-app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sai-heading {
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.sai-eyebrow {
+  color: #8a5265;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.sai-heading h2 {
+  margin: 8px 0;
+  color: #24334e;
+  font-size: 21px;
+}
+
+.sai-heading p,
+.sai-caption,
+.sai-app-footer > span {
+  margin: 8px 0;
+  color: #66758b;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sai-total,
+.sai-badge,
+.sai-server-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sai-total {
+  flex-shrink: 0;
+  color: #455775;
+  background: #edf2f9;
+}
+
+.sai-source {
+  padding: 17px 20px;
+  border: 1px solid rgb(36 51 78 / 7%);
+  border-radius: 16px;
+}
+
+.sai-source > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sai-source strong {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.sai-source > div > span {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.sai-normal { background: #edf8f2; color: #236b50; }
+.sai-warning { background: #fff5e3; color: #885b16; }
+.sai-critical { background: #fff0f2; color: #ac2b48; }
+.sai-maintenance { background: #f2effc; color: #675397; }
+.sai-unknown { background: #eef2f6; color: #526176; }
+
+.sai-search {
+  margin: 22px 0 10px;
+}
+
+.sai-search label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sai-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 15px;
+  border: 1px solid #dce3ee;
+  border-radius: 12px;
+  background: #fff;
+  color: #24334e;
+  font: inherit;
+  font-size: 13px;
+}
+
+.sai-list {
+  display: grid;
+  gap: 10px;
+  max-height: 650px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.sai-app {
+  min-width: 0;
+  border: 1px solid #e5eaf2;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.sai-app[open] {
+  border-color: #cbd6e6;
+  box-shadow: 0 5px 18px rgb(36 51 78 / 4%);
+}
+
+.sai-app-summary {
+  padding: 17px;
+  border-radius: 15px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sai-app-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sai-app-summary:hover {
+  background: #f8fafd;
+}
+
+.sai-app-heading {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 7px;
+}
+
+.sai-app-heading strong {
+  color: #24334e;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.sai-app-heading > span,
+.sai-catalog-status {
+  color: #66758b;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.sai-app-meta {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+}
+
+.sai-chevron {
+  color: #738098;
+  font-size: 20px;
+}
+
+.sai-app[open] .sai-chevron {
+  transform: rotate(180deg);
+}
+
+.sai-app-body {
+  padding: 0 18px 18px;
+  border-top: 1px solid #edf1f6;
+}
+
+.sai-assessment {
+  margin: 18px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.sai-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sai-counts > span {
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #f3f6fa;
+  color: #53647d;
+  font-size: 11px;
+}
+
+.sai-counts b {
+  color: #24334e;
+}
+
+.sai-app-body h3 {
+  margin: 22px 0 6px;
+  font-size: 14px;
+}
+
+.sai-table-wrap {
+  margin-top: 14px;
+  overflow-x: auto;
+  border: 1px solid #e7ecf3;
+  border-radius: 12px;
+}
+
+.sai-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.sai-table th,
+.sai-table td {
+  padding: 13px;
+  border-bottom: 1px solid #edf1f6;
+  vertical-align: top;
+}
+
+.sai-table th {
+  background: #f6f8fc;
+  color: #576781;
+  font-size: 11px;
+}
+
+.sai-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.sai-table small {
+  display: block;
+  margin-top: 6px;
+  color: #66758b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.sai-server-status {
+  background: #eef2f6;
+  color: #526176;
+}
+
+.sai-server-status[data-status="Online"] {
+  background: #edf8f2;
+  color: #236b50;
+}
+
+.sai-server-status[data-status="Warning"] {
+  background: #fff5e3;
+  color: #885b16;
+}
+
+.sai-server-status[data-status="Critical"],
+.sai-server-status[data-status="Offline"] {
+  background: #fff0f2;
+  color: #ac2b48;
+}
+
+.sai-server-status[data-status="Maintenance"] {
+  background: #f2effc;
+  color: #675397;
+}
+
+.sai-app-footer {
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.sai-app-footer a {
+  color: #b7193c;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sai-app-footer a:hover {
+  text-decoration: underline;
+}
+
+.sai-state {
+  padding: 24px 0;
+  color: #66758b;
+  font-size: 13px;
+  text-align: center;
+}
+
+.sai-panel summary:focus-visible,
+.sai-panel input:focus-visible,
+.sai-panel a:focus-visible,
+.sai-panel button:focus-visible,
+.sai-table-wrap:focus-visible {
+  outline: 2px solid #b7193c;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .sai-heading,
+  .sai-source {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sai-app-summary {
+    flex-wrap: wrap;
+  }
+
+  .sai-app-heading {
+    flex-basis: calc(100% - 40px);
+    order: 0;
+  }
+
+  .sai-chevron {
+    order: 1;
+  }
+
+  .sai-app-meta {
+    order: 2;
+    justify-items: start;
+  }
+}
