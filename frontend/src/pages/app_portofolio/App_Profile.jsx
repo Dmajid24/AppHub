@@ -16,10 +16,11 @@ import {
     FileText,
     Mail,
 } from 'lucide-react';
-import Layout from '../../components/layout';
+import Layout from '../../components/Layout';
 import DetailStateWrapper from './DetailStateWrapper';
 import { fetchApplicationById } from '../../services/applications';
 import '../../style/app_portofolio_style/App_Profile_Style.css';
+import ApplicationDataQuality from '../../components/ApplicationDataQuality';
 
 const statusColor = {
     Active: 'badge-active',
@@ -133,6 +134,11 @@ function AppProfile() {
                             </div>
 
                             <AppDetailTabs id={id} />
+
+                            <ApplicationDataQuality
+                                key={id}
+                                applicationId={id}
+                            />
 
                             <div className="profile-info-grid">
                                 {mainInfoItems.map((item) => {

@@ -74,3 +74,25 @@ export async function fetchApplicationById(id) {
     const data = await authFetch(`/api/Applications/${id}`);
     return normalizeApp(data);
 }
+
+export async function fetchApplicationDataQuality(applicationId) {
+  if (!applicationId) {
+    throw new Error('ID aplikasi belum tersedia.');
+  }
+
+  // authFetch sudah mengembalikan data JSON.
+  const data = await authFetch(
+    `/api/Applications/${encodeURIComponent(applicationId)}/data-quality`
+  );
+
+  if (
+    !data?.applicationId ||
+    !Array.isArray(data.checks) ||
+    !Array.isArray(data.missingFields) ||
+    typeof data.completenessPercentage !== 'number'
+  ) {
+    throw new Error('Format respons kelengkapan data tidak valid.');
+  }
+
+  return data;
+}

@@ -224,6 +224,195 @@ namespace backend.Controllers
             return Ok(servers);
         }
 
+        // GET: api/Applications/{id}/data-quality
+        [HttpGet("{id:guid}/data-quality")]
+        public async Task<IActionResult> GetApplicationDataQuality(Guid id)
+        {
+            var currentUser = await GetCurrentUserAsync();
+
+            if (currentUser == null)
+            {
+                return Unauthorized(new
+                {
+                    message = "Data user pada token tidak ditemukan"
+                });
+            }
+
+            IQueryable<Application> query = _context.Applications
+                .AsNoTracking();
+
+            var isAdmin = string.Equals(
+                currentUser.LevelAccess,
+                "Admin",
+                StringComparison.OrdinalIgnoreCase
+            );
+
+            // Aturan akses sama dengan detail aplikasi.
+            if (!isAdmin)
+            {
+                query = query.Where(application =>
+                    application.Category == currentUser.Department
+                    ||
+                    _context.UserApplicationAccesses.Any(access =>
+                        access.UserId == currentUser.Id &&
+                        access.ApplicationId == application.Id &&
+                        access.IsActive
+                    )
+                );
+            }
+
+            // Hanya mengambil informasi yang diperlukan.
+            var app = await query
+                .Where(application => application.Id == id)
+                .Select(application => new
+                {
+                    application.Id,
+                    application.NamaAplikasi,
+                    application.Description,
+                    application.ApplicationUrl,
+                    application.IdPemilik,
+                    application.IdBackupPemilik,
+                    application.DataClassification,
+                    application.DataSource,
+                    application.DataRetentionPolicy,
+                    application.Version,
+                    application.Database,
+                    application.TechnologyStack
+                })
+                .FirstOrDefaultAsync();
+
+            if (app == null)
+            {
+                return NotFound(new
+                {
+                    message = "Aplikasi tidak ditemukan atau tidak dapat diakses"
+                });
+            }
+
+            bool HasText(string? value)
+            {
+                return !string.IsNullOrWhiteSpace(value);
+            }
+
+            bool HasUserId(Guid? value)
+            {
+                return value.HasValue && value.Value != Guid.Empty;
+            }
+
+            // Aturan demo: setiap informasi memiliki bobot yang sama.
+            // Tidak mengubah ketentuan Required pada model aplikasi.
+            var checks = new[]
+            {
+                new
+                {
+                    key = "description",
+                    label = "Deskripsi",
+                    isComplete = HasText(app.Description)
+                },
+                new
+                {
+                    key = "applicationUrl",
+                    label = "URL aplikasi",
+                    isComplete = HasText(app.ApplicationUrl)
+                },
+                new
+                {
+                    key = "owner",
+                    label = "PIC utama",
+                    isComplete = HasUserId(app.IdPemilik)
+                },
+                new
+                {
+                    key = "backupOwner",
+                    label = "Backup PIC",
+                    isComplete = HasUserId(app.IdBackupPemilik)
+                },
+                new
+                {
+                    key = "dataClassification",
+                    label = "Klasifikasi data",
+                    isComplete = HasText(app.DataClassification)
+                },
+                new
+                {
+                    key = "dataSource",
+                    label = "Sumber data",
+                    isComplete = HasText(app.DataSource)
+                },
+                new
+                {
+                    key = "dataRetentionPolicy",
+                    label = "Kebijakan retensi",
+                    isComplete = HasText(app.DataRetentionPolicy)
+                },
+                new
+                {
+                    key = "version",
+                    label = "Versi aplikasi",
+                    isComplete = HasText(app.Version)
+                },
+                new
+                {
+                    key = "database",
+                    label = "Database",
+                    isComplete = HasText(app.Database)
+                },
+                new
+                {
+                    key = "technologyStack",
+                    label = "Teknologi",
+                    isComplete = HasText(app.TechnologyStack)
+                }
+            };
+
+            var totalFields = checks.Length;
+            var completedFields = checks.Count(check => check.isComplete);
+            var missingFields = checks
+                .Where(check => !check.isComplete)
+                .Select(check => new
+                {
+                    check.key,
+                    check.label
+                })
+                .ToList();
+
+            var completenessPercentage = Math.Round(
+                completedFields * 100m / totalFields,
+                1,
+                MidpointRounding.AwayFromZero
+            );
+
+            return Ok(new
+            {
+                applicationId = app.Id,
+                applicationName = app.NamaAplikasi,
+
+                ruleSet = "ApplicationCompletenessDemoV1",
+                assessmentType = "FieldPresence",
+
+                totalFields,
+                completedFields,
+                missingFieldCount = missingFields.Count,
+                completenessPercentage,
+
+                status = missingFields.Count == 0
+                    ? "Complete"
+                    : "Incomplete",
+
+                statusLabel = missingFields.Count == 0
+                    ? "Informasi terisi lengkap"
+                    : "Informasi perlu dilengkapi",
+
+                checks,
+                missingFields,
+
+                note =
+                    "Penilaian berdasarkan keterisian 10 informasi dengan bobot sama. " +
+                    "Tidak memastikan kebenaran, validitas URL, atau kemutakhiran data. " +
+                    "Aturan demo perlu disesuaikan dengan kebutuhan tim."
+            });
+        }
+
         // POST: api/Applications
         [HttpPost]
         public async Task<ActionResult<Application>>
