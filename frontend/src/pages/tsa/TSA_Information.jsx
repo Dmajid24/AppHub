@@ -1,5 +1,5 @@
 import { Activity, AlertTriangle, Clock3, ShieldCheck } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import '../../style/tsa_style/Main_Style.css';
 
 const summaryCards = [

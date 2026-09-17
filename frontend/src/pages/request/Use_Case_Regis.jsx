@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Download, ListChecks } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import '../../style/request_style/Main_Style.css';
 
 const initialFormData = {

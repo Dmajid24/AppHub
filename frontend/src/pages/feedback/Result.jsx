@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import Layout from '../../components/layout';
 import ProgressBar from '../../components/ProgressBar';
-import Table from '../../components/Table';
+import Table from '../../components/table';
 import CheckTicket from './CheckTicket';
 import { fetchApplications } from '../../services/applications';
 import { createComplaint } from '../../services/complaints';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ServerApplicationImpact from '../components/ServerApplicationImpact';
-import Layout from '../components/Layout';
+import Layout from '../components/layout';
 import { fetchServerDetail } from '../services/infrastructure';
 import '../style/ServerDetail.css';
 
@@ -63,9 +63,9 @@ export default function ServerDetail() {
 
   const backUrl =
     typeof returnTo === 'string' &&
-    (returnTo === '/dashboard' || returnTo.startsWith('/dashboard?'))
+    ['/dashboard', '/infrastructure'].some(path => returnTo === path || returnTo.startsWith(`${path}?`))
       ? returnTo
-      : '/dashboard';
+      : '/infrastructure';
 
   useEffect(() => {
     let cancelled = false;
@@ -180,7 +180,7 @@ export default function ServerDetail() {
     <Layout>
       <main className="sd-page">
         <Link className="sd-back" to={backUrl}>
-          ← Kembali ke dashboard
+          ← Kembali ke {backUrl.startsWith('/infrastructure') ? 'Infrastructure Visibility' : 'dashboard'}
         </Link>
 
         {loading ? (

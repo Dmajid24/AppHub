@@ -15,7 +15,7 @@ import {
     Loader2,
     AlertTriangle,
 } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import Table from '../../components/table';
 import { fetchApplications } from '../../services/applications';
 import '../../style/app_portofolio_style/Main_Style.css';

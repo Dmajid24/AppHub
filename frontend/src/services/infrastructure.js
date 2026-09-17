@@ -1,4 +1,9 @@
 import { authFetch } from './api';
+import { buildInfrastructureSnapshot } from './infrastructureSummary';
+
+export async function fetchInfrastructureSnapshot() {
+  return buildInfrastructureSnapshot(await authFetch('/api/infrastructure'));
+}
 
 // Tabel server pada tab Tech Info aplikasi.
 export async function fetchApplicationServers(applicationId) {

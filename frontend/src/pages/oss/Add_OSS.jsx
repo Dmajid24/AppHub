@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Check, Server } from "lucide-react";
-import Layout from "../../components/Layout";
+import Layout from "../../components/layout";
 import "../../style/oss_style/Main_Style.css";
 
 const steps = [

@@ -9,7 +9,7 @@ import {
     ChevronDown,
     FileText,
 } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import { fetchApplications } from '../../services/applications';
 import '../../style/security_style/Main_Style.css';
 

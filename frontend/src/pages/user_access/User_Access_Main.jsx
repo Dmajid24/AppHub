@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserCheck, Plus, Trash2 } from 'lucide-react';
 import Layout from '../../components/layout';
-import Table from '../../components/Table';
+import Table from '../../components/table';
 import { fetchUserAccess, revokeUserAccess } from '../../services/userAccess';
 import { formatTanggal } from '../../services/applications';
 import '../../style/user_access_style/Main_Style.css';

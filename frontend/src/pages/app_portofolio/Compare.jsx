@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Search, Check, Trash2, Columns3, Grid2x2, X, Highlighter, Loader2, AlertTriangle } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import Table from '../../components/table';
 import { fetchApplications } from '../../services/applications';
 import '../../style/app_portofolio_style/Main_Style.css';

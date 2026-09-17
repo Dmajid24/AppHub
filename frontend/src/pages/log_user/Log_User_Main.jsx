@@ -7,7 +7,7 @@ import {
     Lightbulb,
     CalendarDays,
 } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import '../../style/log_user_style/Main_Style.css';
 import '../../style/Dashboard_Style.css';
 

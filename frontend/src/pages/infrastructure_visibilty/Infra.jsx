@@ -1,328 +1,143 @@
-import {
-    Activity,
-    AlertCircle,
-    AlertTriangle,
-    Clock3,
-    MapPin,
-    Server,
-    TrendingUp,
-} from 'lucide-react';
-import Layout from '../../components/Layout';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Activity, AlertTriangle, Clock3, MapPin, RefreshCw, Server } from 'lucide-react';
+import Layout from '../../components/layout';
 import Table from '../../components/table';
+import DataCenterMap from '../../components/DataCenterMap';
+import { fetchInfrastructureSnapshot } from '../../services/infrastructure';
+import { averageMetric, filterServers, SERVER_STATUSES, summarizeStatuses } from '../../services/infrastructureSummary';
 import '../../style/infrastructure_style/Main_Style.css';
 
-const summaryCards = [
-    {
-        title: 'Total Servers',
-        value: '215',
-        detail: 'Online 198 · 92.1%',
-        icon: Server,
-        tone: 'good',
-    },
-    {
-        title: 'Active Alerts',
-        value: '17',
-        detail: 'Critical 3 · Warning 14 · Info 0',
-        icon: AlertTriangle,
-        tone: 'warning',
-    },
-    {
-        title: 'Availability (Avg)',
-        value: '99.98%',
-        detail: '30 day average',
-        icon: Activity,
-        tone: 'good',
-    },
-    {
-        title: 'Avg Response Time',
-        value: '124 ms',
-        detail: 'API response time',
-        icon: Clock3,
-        tone: 'neutral',
-    },
-];
-
-const serverStatusOverview = [
-    { label: 'Online', value: '198', detail: '92.1%', tone: 'good' },
-    { label: 'Warning', value: '14', detail: '6.5%', tone: 'warning' },
-    { label: 'Critical', value: '3', detail: '1.4%', tone: 'danger' },
-    { label: 'Offline', value: '0', detail: '0%', tone: 'neutral' },
-];
-
-const regionHealth = [
-    { region: 'Sumabagut', value: 96 },
-    { region: 'Sumagsel', value: 90 },
-    { region: 'Sumagteng', value: 85 },
-    { region: 'Jabo Inner', value: 78 },
-    { region: 'Jabo Outer', value: 70 },
-];
-
-const criticalServers = [
-    { name: 'cache-server-01', ip: '10.11.2.10', cpu: '95%', memory: '88%', disk: '71%', status: 'Critical', uptime: '12d 6h', response: '203ms' },
-    { name: 'auth-server-02', ip: '10.11.2.11', cpu: '92%', memory: '88%', disk: '82%', status: 'Critical', uptime: '6d 3h', response: '245ms' },
-    { name: 'db-server-01', ip: '10.11.2.12', cpu: '87%', memory: '78%', disk: '65%', status: 'Warning', uptime: '23d 12h', response: '150ms' },
-    { name: 'api-gateway-01', ip: '10.11.2.13', cpu: '82%', memory: '85%', disk: '71%', status: 'Warning', uptime: '8d 4h', response: '112ms' },
-    { name: 'mail-server-01', ip: '10.11.3.11', cpu: '78%', memory: '72%', disk: '60%', status: 'Warning', uptime: '31d 2h', response: '168ms' },
-    { name: 'web-server-03', ip: '10.11.4.14', cpu: '65%', memory: '60%', disk: '45%', status: 'Online', uptime: '15d 8h', response: '80ms' },
-    { name: 'backup-server-01', ip: '10.11.4.13', cpu: '45%', memory: '52%', disk: '35%', status: 'Online', uptime: '26d 18h', response: '76ms' },
-    { name: 'monitoring-01', ip: '10.11.4.10', cpu: '32%', memory: '48%', disk: '28%', status: 'Online', uptime: '10d 6h', response: '64ms' },
-    { name: 'log-server-01', ip: '10.11.4.09', cpu: '28%', memory: '42%', disk: '25%', status: 'Online', uptime: '12d 3h', response: '55ms' },
-    { name: 'cdn-node-01', ip: '10.11.5.00', cpu: '25%', memory: '36%', disk: '20%', status: 'Online', uptime: '20d 5h', response: '48ms' },
-];
-
-const infraAlerts = [
-    { title: 'High CPU Usage', server: 'cache-server-01', severity: 'Critical' },
-    { title: 'Disk Space Low', server: 'backup-server-01', severity: 'Warning' },
-    { title: 'Memory Usage High', server: 'db-server-01', severity: 'Warning' },
-    { title: 'Service Down', server: 'auth-server-02', severity: 'Critical' },
-    { title: 'High Response Time', server: 'api-gateway-01', severity: 'Warning' },
-];
-
-const performanceTrends = [
-    { title: 'CPU Usage', value: '28.4%', detail: 'Average', tone: 'good' },
-    { title: 'Memory Usage', value: '62.7%', detail: 'Average', tone: 'warning' },
-    { title: 'Disk Usage', value: '41.2%', detail: 'Average', tone: 'neutral' },
-    { title: 'Network Traffic', value: '2.45 Tbps', detail: 'Average', tone: 'good' },
-];
-
-const recentIncidents = [
-    { title: 'Database Connection Timeout', status: 'Resolved' },
-    { title: 'High Memory Usage', status: 'Resolved' },
-    { title: 'API Gateway Error Rate High', status: 'Warning' },
-    { title: 'Backup Job Failed', status: 'Critical' },
-    { title: 'Disk Latency High', status: 'Resolved' },
-];
-
-const maintenanceSchedule = [
-    { title: 'Database Cluster Upgrade', schedule: 'Jul 3, 2025 · 02:00 WIB', status: 'Scheduled' },
-    { title: 'Network Maintenance', schedule: 'Jul 4, 2025 · 03:00 WIB', status: 'Scheduled' },
-    { title: 'Storage System Update', schedule: 'Jul 5, 2025 · 02:30 WIB', status: 'Scheduled' },
-    { title: 'Security Patch Deployment', schedule: 'Jul 6, 2025 · 01:00 WIB', status: 'Scheduled' },
-    { title: 'Backup System Maintenance', schedule: 'Jul 7, 2025 · 02:30 WIB', status: 'Scheduled' },
-];
-
-function Infra() {
-    return (
-        <Layout>
-            <div className="infra-page">
-                <div className="infra-summary-grid">
-                    {summaryCards.map((card) => {
-                        const Icon = card.icon;
-                        return (
-                            <div className={`infra-summary-card ${card.tone}`} key={card.title}>
-                                <div className="infra-summary-icon">
-                                    <Icon size={18} strokeWidth={2} />
-                                </div>
-                                <div>
-                                    <p className="infra-summary-title">{card.title}</p>
-                                    <h3>{card.value}</h3>
-                                    <span>{card.detail}</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-
-                <div className="infra-grid">
-                    <section className="infra-card">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Infrastructure Overview</p>
-                                <h2>Server status & health regions</h2>
-                            </div>
-                        </div>
-
-                        <div className="infra-overview-panel">
-                            <div className="infra-status-overview">
-                                {serverStatusOverview.map((item) => (
-                                    <div className="infra-status-block" key={item.label}>
-                                        <div>
-                                            <p className="infra-status-label">{item.label}</p>
-                                            <h3>{item.value}</h3>
-                                        </div>
-                                        <span className={`infra-pill ${item.tone}`}>{item.detail}</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="infra-region-panel">
-                                <div className="infra-region-list">
-                                    <div className="infra-region-list-header">
-                                        <p className="infra-card-label">Health by region</p>
-                                        <h2>Infrastructure health map</h2>
-                                    </div>
-                                    {regionHealth.map((region) => (
-                                        <div className="infra-region-item" key={region.region}>
-                                            <div>
-                                                <p>{region.region}</p>
-                                                <span>{region.value}%</span>
-                                            </div>
-                                            <div className="infra-region-bar">
-                                                <div className="infra-region-fill" style={{ width: `${region.value}%` }} />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="infra-map-card">
-                                    <div className="infra-map-title">
-                                        <MapPin size={18} strokeWidth={2} />
-                                        <span>Region fokus</span>
-                                    </div>
-                                    <p>Distribusi infrastruktur dan kesehatan wilayah ditampilkan di sini.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="infra-card">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Top 10 Critical Servers</p>
-                                <h2>Server prioritas</h2>
-                            </div>
-                        </div>
-
-                        <Table
-                            className="infra-table"
-                            wrapperClassName=""
-                            columns={[
-                                { key: 'name', label: 'Server Name' },
-                                { key: 'ip', label: 'IP Address' },
-                                { key: 'cpu', label: 'CPU' },
-                                { key: 'memory', label: 'Memory' },
-                                { key: 'disk', label: 'Disk' },
-                                {
-                                    key: 'status',
-                                    label: 'Status',
-                                    render: (row) => (
-                                        <span className={`infra-pill ${row.status.toLowerCase()}`}>
-                                            {row.status}
-                                        </span>
-                                    )
-                                }
-                            ]}
-                            data={criticalServers}
-                            rowKey="name"
-                        />
-                    </section>
-                </div>
-
-                <div className="infra-grid">
-                    <section className="infra-card">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Active Alerts</p>
-                                <h2>Peringatan terkini</h2>
-                            </div>
-                        </div>
-                        <div className="infra-alert-list">
-                            {infraAlerts.map((alert) => (
-                                <div className="infra-alert-item" key={alert.title}>
-                                    <div className="infra-alert-icon">
-                                        <AlertCircle size={18} strokeWidth={2} />
-                                    </div>
-                                    <div>
-                                        <h3>{alert.title}</h3>
-                                        <p>{alert.server}</p>
-                                    </div>
-                                    <span className={`infra-pill ${alert.severity.toLowerCase()}`}>{alert.severity}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section className="infra-card">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Performance Trend</p>
-                                <h2>Data pemakaian terakhir</h2>
-                            </div>
-                        </div>
-                        <div className="infra-trend-grid">
-                            {performanceTrends.map((trend) => (
-                                <div className="infra-mini-card" key={trend.title}>
-                                    <div className="infra-mini-card-icon">
-                                        <TrendingUp size={18} strokeWidth={2} />
-                                    </div>
-                                    <div>
-                                        <p>{trend.title}</p>
-                                        <h3>{trend.value}</h3>
-                                        <span>{trend.detail}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                </div>
-
-                <div className="infra-grid infra-grid-3">
-                    <section className="infra-card">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Recent Incidents</p>
-                                <h2>Kejadian terakhir</h2>
-                            </div>
-                        </div>
-                        <div className="infra-incident-list">
-                            {recentIncidents.map((incident) => (
-                                <div className="infra-incident-item" key={incident.title}>
-                                    <div>
-                                        <h3>{incident.title}</h3>
-                                    </div>
-                                    <span className={`infra-pill ${incident.status.toLowerCase()}`}>
-                                        {incident.status}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section className="infra-card infra-map-summary">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Infrastructure Map</p>
-                                <h2>Topologi layanan</h2>
-                            </div>
-                        </div>
-                        <div className="infra-map-placeholder">
-                            <div className="infra-map-title">
-                                <MapPin size={18} strokeWidth={2} />
-                                <span>Internet</span>
-                            </div>
-                            <div className="infra-map-nodes">
-                                <div className="infra-map-node">Web Tier</div>
-                                <div className="infra-map-node">App Tier</div>
-                                <div className="infra-map-node critical">DB Cluster</div>
-                                <div className="infra-map-node">Cache Tier</div>
-                                <div className="infra-map-node">Storage</div>
-                                <div className="infra-map-node">Backup</div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="infra-card">
-                        <div className="infra-card-header">
-                            <div>
-                                <p className="infra-card-label">Maintenance Schedule</p>
-                                <h2>Jadwal pemeliharaan</h2>
-                            </div>
-                        </div>
-                        <div className="infra-schedule-list">
-                            {maintenanceSchedule.map((item) => (
-                                <div className="infra-schedule-item" key={item.title}>
-                                    <div>
-                                        <h3>{item.title}</h3>
-                                        <p>{item.schedule}</p>
-                                    </div>
-                                    <span className="infra-pill scheduled">{item.status}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </Layout>
-    );
+const PAGE_SIZE = 15;
+const priority = { Offline: 0, Critical: 1, Warning: 2, Unknown: 3, Maintenance: 4, Online: 5 };
+const number = (value, unit = '') => value == null ? '—' : `${value.toLocaleString('id-ID', { maximumFractionDigits: 2 })}${unit}`;
+function checkedTime(value) {
+  const date = value ? new Date(value) : null;
+  return date && Number.isFinite(date.getTime()) && date.getUTCFullYear() > 1
+    ? date.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }) + ' WIB' : 'Belum diketahui';
+}
+function Badge({ status }) {
+  return <span className={`infra-pill ${status.toLowerCase()}`}>{status}</span>;
 }
 
-export default Infra;
+export default function Infra() {
+  const location = useLocation();
+  const [snapshot, setSnapshot] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [reloadKey, setReloadKey] = useState(0);
+  const [selection, setSelection] = useState({ cityKey: null, dcId: null });
+  const [status, setStatus] = useState('');
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const onSelectionChange = useCallback(next => {
+    setSelection(next);
+    setPage(1);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      setError('');
+      try {
+        const data = await fetchInfrastructureSnapshot();
+        if (!cancelled) setSnapshot(data);
+      } catch (err) {
+        if (!cancelled) setError(err.message || 'Gagal memuat infrastruktur.');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [reloadKey]);
+
+  const servers = snapshot?.servers ?? [];
+  const counts = summarizeStatuses(servers);
+  const problemCount = counts.Critical + counts.Warning + counts.Offline;
+  const scoped = filterServers(servers, selection);
+  const filtered = filterServers(servers, { ...selection, status, search })
+    .sort((a, b) => priority[a.status] - priority[b.status] || a.hostname.localeCompare(b.hostname));
+  const alerts = scoped.filter(s => ['Critical', 'Warning', 'Offline'].includes(s.status))
+    .sort((a, b) => priority[a.status] - priority[b.status]);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const returnTo = location.pathname + location.search;
+  const detailLink = server => <Link to={`/servers/${server.serverId}`} state={{ returnTo }}>{server.hostname || server.serverName}</Link>;
+  const cards = [
+    { title: 'Total Server', value: servers.length, detail: `${counts.Online} Online`, icon: Server },
+    { title: 'Perlu Perhatian', value: problemCount, detail: `${counts.Critical} Critical · ${counts.Warning} Warning · ${counts.Offline} Offline`, icon: AlertTriangle },
+    { title: 'Data Center', value: snapshot?.locations.length ?? 0, detail: 'Termasuk DC tanpa server', icon: MapPin },
+    { title: 'Availability Rata-rata', value: number(averageMetric(servers, 'availability', 100), '%'), detail: 'Rata-rata nilai tersimpan', icon: Activity },
+    { title: 'Response Time Rata-rata', value: number(averageMetric(servers, 'responseTimeMs'), ' ms'), detail: 'Rata-rata nilai tersimpan', icon: Clock3 },
+  ];
+  const validTimes = servers.map(s => Date.parse(s.lastChecked)).filter(t => Number.isFinite(t) && t > 0);
+  const scopeName = selection.dcId ? snapshot?.locations.find(dc => dc.id === selection.dcId)?.name
+    : selection.cityKey || 'Semua lokasi';
+
+  return (
+    <Layout>
+      <div className="infra-page">
+        <div className="infra-toolbar">
+          <div><h1>Infrastructure Visibility</h1><p>Lokasi, kondisi, dan kapasitas server berdasarkan data tersimpan.</p></div>
+          <button type="button" className="infra-control" disabled={loading} onClick={() => setReloadKey(key => key + 1)}><RefreshCw size={16} />{loading ? 'Memuat…' : 'Muat ulang data'}</button>
+        </div>
+        {loading ? <div className="infra-card" role="status">Memuat data infrastruktur…</div>
+          : error ? <div className="infra-card" role="alert"><h2>Data belum dapat dimuat</h2><p>{error}</p><p>Halaman ini memerlukan akun Admin.</p><button type="button" className="infra-control" onClick={() => setReloadKey(key => key + 1)}>Coba lagi</button></div>
+          : snapshot && <>
+            <div className="infra-summary-grid">{cards.map(card => {
+              const Icon = card.icon;
+              return <div className="infra-summary-card" key={card.title}><div className="infra-summary-icon"><Icon size={18} /></div><div><p className="infra-summary-title">{card.title}</p><h3>{card.value}</h3><span>{card.detail}</span></div></div>;
+            })}</div>
+            <p className="infra-note">Ringkasan atas mencakup semua lokasi. Data diambil: {checkedTime(snapshot.retrievedAt)}.<br />
+              Waktu pemeriksaan server: {validTimes.length ? `${checkedTime(Math.min(...validTimes))} — ${checkedTime(Math.max(...validTimes))}` : 'Belum diketahui'}.
+              {' '}Nilai ini bukan pemeriksaan langsung atau tren 30 hari; gunakan waktu pemeriksaan untuk menilai kebaruan data.</p>
+            {!servers.length && <div className="infra-card" role="status">Belum ada server tersimpan. Ringkasan akan terisi setelah data server tersedia.</div>}
+            <DataCenterMap snapshot={snapshot} onSelectionChange={onSelectionChange} />
+            <section className="infra-card">
+              <div className="infra-card-header"><div><p className="infra-card-label">Status semua server</p><h2>Distribusi status</h2></div></div>
+              <div className="infra-status-overview">{SERVER_STATUSES.map(item => <div className="infra-status-block" key={item}><div><p className="infra-status-label">{item}</p><strong>{counts[item]}</strong></div><span>{servers.length ? number(counts[item] / servers.length * 100, '%') : '—'}</span></div>)}</div>
+            </section>
+            <section className="infra-card">
+              <div className="infra-card-header"><div><p className="infra-card-label">Inventaris server</p><h2>{scopeName}</h2></div><span>{filtered.length} server</span></div>
+              <p className="infra-note">Pilihan kota atau DC pada map memfilter tabel, kondisi server, dan pemakaian resource di bawah.</p>
+              <div className="infra-filters">
+                <label>Cari server atau aplikasi<input value={search} placeholder="Hostname, IP, atau nama aplikasi" onChange={event => { setSearch(event.target.value); setPage(1); }} /></label>
+                <label>Status<select value={status} onChange={event => { setStatus(event.target.value); setPage(1); }}><option value="">Semua status</option>{SERVER_STATUSES.map(item => <option key={item}>{item}</option>)}</select></label>
+              </div>
+              <Table className="infra-table" wrapperClassName="infra-table-wrapper" rowKey="serverId"
+                data={filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
+                emptyMessage="Tidak ada server yang sesuai filter."
+                columns={[
+                  { key: 'hostname', label: 'Server', render: detailLink },
+                  { key: 'deviceIpAddress', label: 'IP Address' },
+                  { key: 'dataCenterName', label: 'Data Center' },
+                  { key: 'status', label: 'Status', render: s => <Badge status={s.status} /> },
+                  { key: 'cpuUsage', label: 'CPU', render: s => number(s.cpuUsage, '%') },
+                  { key: 'memoryUsage', label: 'RAM', render: s => number(s.memoryUsage, '%') },
+                  { key: 'diskUsage', label: 'Disk', render: s => number(s.diskUsage, '%') },
+                  { key: 'applications', label: 'Aplikasi', render: s => s.applications.length },
+                  { key: 'lastChecked', label: 'Terakhir diperiksa', render: s => checkedTime(s.lastChecked) },
+                ]} />
+              <div className="infra-pagination"><button className="infra-control" disabled={currentPage <= 1} onClick={() => setPage(currentPage - 1)}>Sebelumnya</button><span>Halaman {currentPage} / {totalPages}</span><button className="infra-control" disabled={currentPage >= totalPages} onClick={() => setPage(currentPage + 1)}>Berikutnya</button></div>
+            </section>
+            <div className="infra-grid">
+              <section className="infra-card"><div className="infra-card-header"><div><p className="infra-card-label">Kondisi tersimpan · {scopeName}</p><h2>Server perlu perhatian ({alerts.length})</h2></div></div>
+                <div className="infra-alert-list">{alerts.length ? alerts.slice(0, 10).map(server => <div className="infra-alert-item" key={server.serverId}><div><h3>{detailLink(server)}</h3><p>{server.dataCenterName} · {checkedTime(server.lastChecked)}</p></div><Badge status={server.status} /></div>) : <p>Tidak ada status Critical, Warning, atau Offline di lokasi ini.</p>}</div>
+                {alerts.length > 10 && <p className="infra-note">Menampilkan 10 prioritas tertinggi. Gunakan filter status pada tabel untuk melihat lainnya.</p>}
+              </section>
+              <section className="infra-card"><div className="infra-card-header"><div><p className="infra-card-label">Resource · {scopeName}</p><h2>Pemakaian tersimpan</h2></div></div>
+                <div className="infra-trend-grid">{[['CPU', 'cpuUsage'], ['RAM', 'memoryUsage'], ['Disk', 'diskUsage']].map(([label, field]) => <div className="infra-mini-card" key={field}><div><p>{label}</p><h3>{number(averageMetric(scoped, field, 100), '%')}</h3><span>Rata-rata per server</span></div></div>)}</div>
+                <p className="infra-note">Rata-rata persentase per server, bukan utilisasi gabungan berbobot kapasitas. Traffic jaringan belum tersedia.</p>
+              </section>
+            </div>
+            <div className="infra-grid">
+              <section className="infra-card"><h2>Histori insiden dan tren</h2><p className="infra-note">Belum tersedia. Data saat ini hanya menyimpan kondisi terakhir server.</p></section>
+              <section className="infra-card"><h2>Jadwal maintenance</h2><p className="infra-note">Belum ada data jadwal. Status Maintenance hanya menunjukkan kondisi server yang tercatat.</p></section>
+            </div>
+          </>}
+      </div>
+    </Layout>
+  );
+}

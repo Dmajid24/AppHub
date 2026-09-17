@@ -1,5 +1,5 @@
 import { AlertTriangle, ClipboardList, Database, HeartPulse, Layers, Search } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import '../../style/oss_style/Main_Style.css';
 
 const summaryCards = [

@@ -15,12 +15,11 @@ import {
   Download,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import Layout from '../components/Layout';
+import Layout from '../components/layout';
 import ProgressBar from '../components/ProgressBar';
 import Table from '../components/table';
 import '../style/Dashboard_Style.css';
 import '../style/Table_Style.css';
-import DataCenterMap from '../components/DataCenterMap';
 
 const kpis = [
   {
@@ -411,7 +410,7 @@ export default function Dashboard() {
               </div>
             </div>
             
-            <DataCenterMap />
+
 
             {/* Ticket Action Row */}
             <div className="exec-actions">

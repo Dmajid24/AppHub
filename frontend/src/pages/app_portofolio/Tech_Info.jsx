@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { ArrowLeft, Boxes, Server } from 'lucide-react';
 
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import DetailStateWrapper from './DetailStateWrapper';
 import { fetchApplicationById } from '../../services/applications';
 import { fetchApplicationServers } from '../../services/infrastructure';

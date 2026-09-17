@@ -263,7 +263,7 @@ function ServerPreview({ server, returnTo }) {
   );
 }
 
-export default function DataCenterMap() {
+export default function DataCenterMap({ snapshot = null, onSelectionChange }) {
   const location = useLocation();
 
   const [savedSelection] = useState(() => {
@@ -280,8 +280,10 @@ export default function DataCenterMap() {
     }
   });
 
-  const [locations, setLocations] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadedLocations, setLocations] = useState([]);
+  const locations = snapshot?.locations ?? loadedLocations;
+  const [isLoading, setLoading] = useState(true);
+  const loading = snapshot ? false : isLoading;
   const [error, setError] = useState('');
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -314,6 +316,7 @@ export default function DataCenterMap() {
   }, [selectedCityKey, selectedDcId, selectedServerId]);
 
   useEffect(() => {
+    if (snapshot) return;
     let cancelled = false;
 
     async function load() {
@@ -334,7 +337,7 @@ export default function DataCenterMap() {
     return () => {
       cancelled = true;
     };
-  }, [reloadKey]);
+  }, [reloadKey, snapshot]);
 
   const cities = useMemo(() => {
     const groups = new Map();
@@ -391,8 +394,13 @@ export default function DataCenterMap() {
 
   const activeDcId = selectedDc?.id ?? null;
 
+  const activeCityKey = selectedCity?.key ?? null;
   useEffect(() => {
-    if (!activeDcId) return;
+    onSelectionChange?.({ cityKey: activeCityKey, dcId: activeDcId });
+  }, [activeCityKey, activeDcId, onSelectionChange]);
+
+  useEffect(() => {
+    if (!activeDcId || snapshot) return;
 
     let cancelled = false;
 
@@ -431,19 +439,20 @@ export default function DataCenterMap() {
     return () => {
       cancelled = true;
     };
-  }, [activeDcId, serverReloadKey]);
+  }, [activeDcId, serverReloadKey, snapshot]);
 
-  const currentServers =
-    activeDcId && serverState.dcId === activeDcId
+  const currentServers = snapshot
+    ? snapshot.servers.filter(server => server.dataCenterId === activeDcId)
+    : activeDcId && serverState.dcId === activeDcId
       ? serverState.servers
       : [];
 
   const serversLoading =
-    Boolean(activeDcId) &&
+    !snapshot && Boolean(activeDcId) &&
     (serverState.dcId !== activeDcId || serverState.loading);
 
   const serversError =
-    serverState.dcId === activeDcId ? serverState.error : '';
+    !snapshot && serverState.dcId === activeDcId ? serverState.error : '';
 
   const selectedServer =
     currentServers.find((server) => server.serverId === selectedServerId) ?? null;
@@ -495,7 +504,7 @@ export default function DataCenterMap() {
         <div>
           <div className="dc-heading-title">
             <h2 id="dc-map-title">Server Health Map</h2>
-            <span className="dc-demo-label">Snapshot demo</span>
+            <span className="dc-demo-label">{snapshot ? 'Data tersimpan' : 'Snapshot demo'}</span>
           </div>
           <p>Lokasi infrastruktur dan kondisi server</p>
         </div>

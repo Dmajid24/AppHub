@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Bot, ArrowLeft } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import { fetchApplications } from '../../services/applications';
 import '../../style/feedback_style/Main_Style.css';
 

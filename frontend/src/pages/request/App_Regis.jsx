@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, ClipboardList } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import { appRegistration } from '../../services/api'; // adjust path if api.js lives elsewhere
 import '../../style/request_style/Main_Style.css';
 

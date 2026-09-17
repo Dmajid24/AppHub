@@ -1,5 +1,5 @@
 import { Loader2, AlertTriangle, ArrowLeft } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 
 /**
  * DetailStateWrapper

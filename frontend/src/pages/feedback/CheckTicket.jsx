@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Search, Check, Clock, Loader2, CheckCircle2, XCircle } from 'lucide-react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import '../../style/feedback_style/Main_Style.css';
 
 const statusMeta = {
